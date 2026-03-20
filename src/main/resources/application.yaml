@@ -1,0 +1,146 @@
+server:
+  port: 8443
+  servlet:
+    context-path: /dev-engine
+
+spring:
+  application:
+    name: dev-engine-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/Ideax
+    username: root
+    password: 12345678
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: jayasriraman2003@gmail.com
+    password: oihf oars ymgk nkju
+
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+email:
+
+  admin:
+    email-id: jayasriraman2003@gmail.com
+
+  templates:
+
+    admin-registration-approval:
+      subject: "New User Registration Approval Required"
+      body: |
+        <div style="font-family:Arial,Helvetica,sans-serif;background:#f4f7fb;padding:30px;">
+
+          <div style="max-width:600px;margin:auto;background:#ffffff;border-radius:10px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+
+            <!-- Header -->
+            <div style="background:#0d6efd;color:#ffffff;padding:20px;text-align:center;">
+              <h2 style="margin:0;">DE • Dev Engine</h2>
+              <p style="margin:5px 0 0;font-size:13px;">Server Management Platform</p>
+            </div>
+
+            <!-- Content -->
+            <div style="padding:25px;">
+
+              <h3 style="margin-top:0;color:#333;">New User Registration Approval</h3>
+
+              <p>A new user has registered and requires your approval.</p>
+
+              <div style="background:#f8f9fc;padding:15px;border-radius:8px;margin:20px 0;">
+                <p><strong>Username:</strong> {userName}</p>
+                <p><strong>Email:</strong> {userEmail}</p>
+                <p><strong>Registration Time:</strong> {timestamp}</p>
+              </div>
+
+              <p><strong>OTP for Approval</strong></p>
+
+              <div style="
+                  background:#e9f2ff;
+                  border-radius:8px;
+                  padding:15px;
+                  text-align:center;
+                  font-size:32px;
+                  font-weight:bold;
+                  letter-spacing:6px;
+                  color:#0d6efd;
+              ">
+                {otp}
+              </div>
+
+              <p style="margin-top:20px;font-size:13px;color:#666;">
+                Use this OTP in the admin approval portal to approve the user registration.
+              </p>
+
+            </div>
+
+            <!-- Footer -->
+            <div style="background:#f1f3f8;text-align:center;padding:15px;font-size:12px;color:#777;">
+              Dev Engine • Secure Server File Management Platform
+            </div>
+
+          </div>
+
+        </div>
+
+
+    forget-password:
+      subject: "Password Reset Request"
+      body: |
+        <div style="font-family:Arial,Helvetica,sans-serif;background:#f4f7fb;padding:30px;">
+
+          <div style="max-width:600px;margin:auto;background:#ffffff;border-radius:10px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+
+            <!-- Header -->
+            <div style="background:#0d6efd;color:#ffffff;padding:20px;text-align:center;">
+              <h2 style="margin:0;">DE • Dev Engine</h2>
+              <p style="margin:5px 0 0;font-size:13px;">Server Management Platform</p>
+            </div>
+
+            <!-- Content -->
+            <div style="padding:25px;">
+
+              <h3 style="margin-top:0;color:#333;">Password Reset Request</h3>
+
+              <p>Hello <strong>{userName}</strong>,</p>
+
+              <p>You requested to reset your password. Use the OTP below:</p>
+
+              <div style="
+                  background:#e9f2ff;
+                  border-radius:8px;
+                  padding:18px;
+                  text-align:center;
+                  font-size:32px;
+                  font-weight:bold;
+                  letter-spacing:6px;
+                  color:#0d6efd;
+                  margin:20px 0;
+              ">
+                {otp}
+              </div>
+
+              <p style="font-size:14px;color:#666;">
+                This OTP will expire in <strong>{expiryMinutes} minutes</strong>.
+              </p>
+
+              <p style="font-size:13px;color:#999;margin-top:25px;">
+                If you didn't request a password reset, please ignore this email.
+              </p>
+
+            </div>
+
+            <!-- Footer -->
+            <div style="background:#f1f3f8;text-align:center;padding:15px;font-size:12px;color:#777;">
+              Dev Engine • Secure Server File Management Platform
+            </div>
+
+          </div>
+
+        </div>
