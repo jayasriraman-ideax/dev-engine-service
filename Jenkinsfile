@@ -9,6 +9,13 @@ pipeline {
 
     stages {
 
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                        url: 'https://github.com/jayasriraman-ideax/dev-engine-service.git'
+            }
+        }
+
         stage('Build JAR') {
             steps {
                 bat 'mvn clean package -DskipTests'
@@ -24,8 +31,8 @@ pipeline {
         stage('Stop Old Container') {
             steps {
                 bat '''
-                docker stop %CONTAINER_NAME% || exit 0
-                docker rm %CONTAINER_NAME% || exit 0
+                docker stop %CONTAINER_NAME% 2>nul
+                docker rm %CONTAINER_NAME% 2>nul
                 '''
             }
         }
@@ -37,6 +44,12 @@ pipeline {
                 --name %CONTAINER_NAME% ^
                 %IMAGE_NAME%
                 '''
+            }
+        }
+
+        stage('Verify Container') {
+            steps {
+                bat 'docker ps'
             }
         }
     }
