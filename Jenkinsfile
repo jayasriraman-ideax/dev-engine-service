@@ -31,9 +31,11 @@ pipeline {
         stage('Stop Old Container') {
             steps {
                 bat '''
-                docker stop %CONTAINER_NAME% 2>nul
-                docker rm %CONTAINER_NAME% 2>nul
-                '''
+        docker ps -a | findstr %CONTAINER_NAME% && (
+            docker stop %CONTAINER_NAME%
+            docker rm %CONTAINER_NAME%
+        ) || echo No existing container
+        '''
             }
         }
 
