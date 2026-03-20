@@ -9,13 +9,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                git branch: 'main',
-                        url: 'https://github.com/jayasriraman-ideax/dev-engine-service.git'
-            }
-        }
-
         stage('Build JAR') {
             steps {
                 bat 'mvn clean package -DskipTests'
@@ -28,30 +21,38 @@ pipeline {
             }
         }
 
-        stage('Stop Old Container') {
+        stage('Stop & Remove Old Container') {
             steps {
                 bat '''
-        docker ps -a | findstr %CONTAINER_NAME% && (
-            docker stop %CONTAINER_NAME%
-            docker rm %CONTAINER_NAME%
-        ) || echo No existing container
-        '''
+                echo Stopping old container if exists...
+                docker stop %CONTAINER_NAME% >nul 2>&1
+
+                echo Removing old container if exists...
+                docker rm %CONTAINER_NAME% >nul 2>&1
+
+                exit 0
+                '''
             }
         }
 
-        stage('Run Container') {
+        stage('Run New Container') {
             steps {
                 bat '''
+                echo Starting new container...
                 docker run -d -p %PORT%:%PORT% ^
                 --name %CONTAINER_NAME% ^
+                --restart unless-stopped ^
                 %IMAGE_NAME%
                 '''
             }
         }
 
-        stage('Verify Container') {
+        stage('Verify Deployment') {
             steps {
-                bat 'docker ps'
+                bat '''
+                echo Checking running containers...
+                docker ps
+                '''
             }
         }
     }
@@ -62,6 +63,9 @@ pipeline {
         }
         failure {
             echo '❌ Deployment failed!'
+        }
+        always {
+            echo '📦 Pipeline execution completed.'
         }
     }
 }
