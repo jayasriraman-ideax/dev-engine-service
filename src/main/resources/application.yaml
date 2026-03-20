@@ -7,8 +7,13 @@ spring:
   application:
     name: dev-engine-service
 
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/Ideax
+#    username: root
+#    password: 12345678
+#    driver-class-name: com.mysql.cj.jdbc.Driver
   datasource:
-    url: jdbc:mysql://localhost:3306/Ideax
+    url: jdbc:mysql://host.docker.internal:3306/Ideax
     username: root
     password: 12345678
     driver-class-name: com.mysql.cj.jdbc.Driver
