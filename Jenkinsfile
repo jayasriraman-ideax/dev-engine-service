@@ -9,12 +9,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/jayasriraman-ideax/dev-engine-service.git'
-            }
-        }
-
         stage('Build JAR') {
             steps {
                 sh 'mvn clean package -DskipTests'
